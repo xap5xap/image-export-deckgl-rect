@@ -4,7 +4,6 @@ import DeckGL from "@deck.gl/react";
 import { StaticMap } from "react-map-gl";
 import { GeoJsonLayer, ArcLayer } from "@deck.gl/layers";
 import FileSaver from "file-saver";
-/* tslint:disable */
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
@@ -33,23 +32,7 @@ class App extends React.Component {
     }
   };
 
-  bla = (d) => d.features.filter((f) => f.properties.scalerank < 4);
-
-  onLoad = () => {
-    const deck = this.refDeckgl.current;
-    console.log("deck", deck);
-
-    // this.props.onGetDeckGL(deck);
-  };
-
-  hanldeLoadMap = () => {
-    const map = this.refMap.current;
-    console.log("map3", map);
-  };
-
   handleDownload = () => {
-    console.log("this.refMap", this.refMap);
-    console.log("this.refDeckgl", this.refDeckgl);
     const fileName = "Map.png";
 
     if (!this.refMap.current || !this.refDeckgl.current) {
@@ -57,19 +40,10 @@ class App extends React.Component {
     }
     const mapGL = this.refMap.current.getMap();
     const deck = this.refDeckgl.current.deck;
-    console.log("mapGL", mapGL);
-    console.log("deck", deck);
 
     const mapboxCanvas = mapGL.getCanvas();
-    console.log("mapboxCanvas", mapboxCanvas);
     deck.redraw(true);
-    // const deckglCanvas = document.getElementById(
-    //   "deck-gl-canvas"
-    // ) as CanvasImageSource;
-
     const deckglCanvas = deck.canvas;
-
-    console.log("deckglCanvas", deckglCanvas);
 
     let merge = document.createElement("canvas");
     merge.width = mapboxCanvas.width;
@@ -116,8 +90,6 @@ class App extends React.Component {
         getWidth: 1,
       }),
     ];
-    console.log("mapRef", this.refMap);
-    console.log("deckglRef", this.refDeckgl);
     return (
       <div>
         <button
@@ -138,11 +110,9 @@ class App extends React.Component {
             initialViewState={INITIAL_VIEW_STATE}
             controller={true}
             layers={layers}
-            onLoad={this.onLoad}
           >
             <StaticMap
               ref={this.refMap}
-              onLoad={this.hanldeLoadMap}
               preserveDrawingBuffer={true}
               width="100%"
               height="100%"
